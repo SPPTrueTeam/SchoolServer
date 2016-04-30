@@ -1,0 +1,16 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="SchoolServ">
+    <output-path>C:/apache-tomcat-9.0.0.M3/webapps</output-path>
+    <root id="root">
+      <element id="javaee-facet-resources" facet="SchoolServ/web/Web" />
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="SchoolServ" />
+        </element>
+        <element id="directory" name="lib">
+          <element id="library" level="project" name="Struts 2-2.3.20.1" />
+        </element>
+      </element>
+    </root>
+  </artifact>
+</component>
