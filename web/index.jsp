@@ -8,6 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <html>
+<script src="angular.js"></script>
   <head>
     <title>Hello world</title>
   </head>
@@ -18,5 +19,12 @@
     <input type="text" name="name"/>
     <input type="submit" value="Say Hello"/>
   </form>
+  <div ng-app="">
+
+    <p>Input something in the input box:</p>
+    <p>Name: <input type="text" ng-model="name"></p>
+    <p ng-bind="name"></p>
+
+  </div>
   </body>
 </html>
