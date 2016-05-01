@@ -1,6 +1,6 @@
 <component name="ArtifactManager">
   <artifact type="exploded-war" name="SchoolServ">
-    <output-path>C:/apache-tomcat-9.0.0.M3/webapps</output-path>
+    <output-path>E:/Tomcat/apache-tomcat-9.0.0.M4-windows-x86/apache-tomcat-9.0.0.M4/webapps</output-path>
     <root id="root">
       <element id="javaee-facet-resources" facet="SchoolServ/web/Web" />
       <element id="directory" name="WEB-INF">
