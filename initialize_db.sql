@@ -1,5 +1,3 @@
-SET FOREIGN_KEY_CHECKS=0
-
 DROP TABLE IF EXISTS `classes` CASCADE
 ;
 
@@ -38,7 +36,8 @@ CREATE TABLE `lessons`
 	`lesson_id` INT NOT NULL AUTO_INCREMENT ,
 	`date` DATE NOT NULL,
 	`schedule_number` INT NOT NULL,
-	`homework` VARCHAR(200) NOT NULL,
+	`homework` VARCHAR(200),
+	`room` INT,
 	`subject_id` INT NOT NULL,
 	CONSTRAINT `PK_lessons` PRIMARY KEY (`lesson_id`)
 )
@@ -57,7 +56,9 @@ CREATE TABLE `marks`
 CREATE TABLE `pupils`
 (
 	`pupil_id` INT NOT NULL AUTO_INCREMENT ,
-	`user_id` INT NOT NULL,
+	`surname` VARCHAR(50) NOT NULL,
+	`name` VARCHAR(50) NOT NULL,
+	`user_id` INT,
 	`class_id` INT NOT NULL,
 	CONSTRAINT `PK_pupils` PRIMARY KEY (`pupil_id`)
 )
@@ -85,8 +86,10 @@ CREATE TABLE `subjects`
 CREATE TABLE `teachers`
 (
 	`teacher_id` INT NOT NULL AUTO_INCREMENT ,
-	`type` VARCHAR(100) NOT NULL,
-	`user_id` INT NOT NULL,
+	`surname` VARCHAR(50) NOT NULL,
+	`name` VARCHAR(50) NOT NULL,
+	`type` VARCHAR(100),
+	`user_id` INT,
 	CONSTRAINT `PK_teachers` PRIMARY KEY (`teacher_id`)
 )
 ;
@@ -94,11 +97,9 @@ CREATE TABLE `teachers`
 CREATE TABLE `users`
 (
 	`user_id` INT NOT NULL AUTO_INCREMENT ,
-	`surname` VARCHAR(50) NOT NULL,
-	`name` VARCHAR(50) NOT NULL,
 	`login` VARCHAR(50) NOT NULL,
 	`password` VARCHAR(64) NOT NULL,
-	`email` VARCHAR(50) NOT NULL,
+	`email` VARCHAR(50),
 	`role_id` INT NOT NULL,
 	CONSTRAINT `PK_users` PRIMARY KEY (`user_id`)
 )
@@ -106,12 +107,12 @@ CREATE TABLE `users`
 
 ALTER TABLE `lessons` 
  ADD CONSTRAINT `FK_lessons_subjects`
-	FOREIGN KEY (`subject_id`) REFERENCES `subjects` (`subject_id`) ON DELETE Restrict ON UPDATE Restrict
+	FOREIGN KEY (`subject_id`) REFERENCES `subjects` (`subject_id`) ON DELETE Cascade ON UPDATE Cascade
 ;
 
 ALTER TABLE `marks` 
  ADD CONSTRAINT `FK_marks_lessons`
-	FOREIGN KEY (`lesson_id`) REFERENCES `lessons` (`lesson_id`) ON DELETE Restrict ON UPDATE Restrict
+	FOREIGN KEY (`lesson_id`) REFERENCES `lessons` (`lesson_id`) ON DELETE Cascade ON UPDATE Cascade
 ;
 
 ALTER TABLE `marks` 
@@ -121,7 +122,7 @@ ALTER TABLE `marks`
 
 ALTER TABLE `pupils` 
  ADD CONSTRAINT `FK_pupils_classes`
-	FOREIGN KEY (`class_id`) REFERENCES `classes` (`class_id`) ON DELETE Restrict ON UPDATE Restrict
+	FOREIGN KEY (`class_id`) REFERENCES `classes` (`class_id`) ON DELETE Set Null ON UPDATE Cascade
 ;
 
 ALTER TABLE `pupils` 
@@ -131,12 +132,12 @@ ALTER TABLE `pupils`
 
 ALTER TABLE `subjects` 
  ADD CONSTRAINT `FK_subjects_classes`
-	FOREIGN KEY (`class_id`) REFERENCES `classes` (`class_id`) ON DELETE Restrict ON UPDATE Restrict
+	FOREIGN KEY (`class_id`) REFERENCES `classes` (`class_id`) ON DELETE Restrict ON UPDATE Cascade
 ;
 
 ALTER TABLE `subjects` 
  ADD CONSTRAINT `FK_subjects_teachers`
-	FOREIGN KEY (`teacher_id`) REFERENCES `teachers` (`teacher_id`) ON DELETE Restrict ON UPDATE Restrict
+	FOREIGN KEY (`teacher_id`) REFERENCES `teachers` (`teacher_id`) ON DELETE Restrict ON UPDATE Cascade
 ;
 
 ALTER TABLE `teachers` 
@@ -148,5 +149,3 @@ ALTER TABLE `users`
  ADD CONSTRAINT `FK_users_role`
 	FOREIGN KEY (`role_id`) REFERENCES `roles` (`role_id`) ON DELETE Restrict ON UPDATE Restrict
 ;
-
-SET FOREIGN_KEY_CHECKS=1
