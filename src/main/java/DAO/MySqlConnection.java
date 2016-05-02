@@ -14,10 +14,16 @@ import java.sql.Statement;
  */
 public class MySqlConnection {
     private Connection connection;
-    private Statement statement;
     private String USER = "root";
     private String PASSWORD = "root";
     private String HOST = "jdbc:mysql://localhost:3306/school_db";
+
+    public MySqlConnection(){}
+    public MySqlConnection(String host, String user, String password){
+        this.USER = user;
+        this.PASSWORD = password;
+        this.HOST = host;
+    }
 
     public Connection getConnection(){
         if (connection != null)

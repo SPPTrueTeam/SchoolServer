@@ -11,6 +11,7 @@ public class Lesson implements IEntity {
     private Date date;
     private int scheduleNumber;
     private String homework;
+    private int subjectID;
 
     public int getID() {
         return 0;
@@ -42,5 +43,13 @@ public class Lesson implements IEntity {
 
     public void setHomework(String homework) {
         this.homework = homework;
+    }
+
+    public int getSubjectID() {
+        return subjectID;
+    }
+
+    public void setSubjectID(int subjectID) {
+        this.subjectID = subjectID;
     }
 }

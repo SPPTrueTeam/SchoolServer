@@ -6,6 +6,8 @@ package Entities;
 public class Mark implements IEntity {
     private int ID;
     private int mark;
+    private int pupilID;
+    private int lessonID;
 
     public int getID() {
         return ID;
@@ -21,5 +23,21 @@ public class Mark implements IEntity {
 
     public void setMark(int mark) {
         this.mark = mark;
+    }
+
+    public int getPupilID() {
+        return pupilID;
+    }
+
+    public void setPupilID(int pupilID) {
+        this.pupilID = pupilID;
+    }
+
+    public int getLessonID() {
+        return lessonID;
+    }
+
+    public void setLessonID(int lessonID) {
+        this.lessonID = lessonID;
     }
 }

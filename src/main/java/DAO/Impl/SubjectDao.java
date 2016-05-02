@@ -32,10 +32,10 @@ public class SubjectDao implements ISubjectDao {
             "JOIN subjects ON subjects.class_id=classes.class_id " +
             "WHERE pupils.pupil_id=?";
     private final String SELECT_SUBJECT_BY_ID = "SELECT * FROM subjects WHERE subject_id = ?";
-    private final String INSERT_SUBJECT = "INSERT INTO subjects (name, lesson_count, class_id, teacher_id) VALUES (?, ?, ?, ?);";
+    private final String INSERT_SUBJECT = "INSERT INTO subjects (name, lesson_count, class_id, teacher_id) VALUES (?, ?, ?, ?)";
     private final String DELETE_SUBJECT = "DELETE FROM subjects WHERE `subject_id`= ?";
     private final String UPDATE_SUBJECT = "UPDATE `subjects`" +
-            "SET `name`= ? , `lesson_count`= ?, `class_id`= ?, `teacher_id`= ? WHERE `subject_id`= ?";;
+            "SET `name`= ? , `lesson_count`= ?, `class_id`= ?, `teacher_id`= ? WHERE `subject_id`= ?";
 
 
     private MySqlConnection connection;
