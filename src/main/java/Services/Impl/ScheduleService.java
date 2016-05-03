@@ -59,7 +59,7 @@ public class ScheduleService implements IScheduleService {
         return null;
     }
 
-    public SubjectJournal GetSubjectJournal(Subject subject) {
-        return null;
+    public void GetSubjectJournal(Subject subject) {
+
     }
 }

@@ -122,7 +122,7 @@ ALTER TABLE `marks`
 
 ALTER TABLE `pupils` 
  ADD CONSTRAINT `FK_pupils_classes`
-	FOREIGN KEY (`class_id`) REFERENCES `classes` (`class_id`) ON DELETE Set Null ON UPDATE Cascade
+	FOREIGN KEY (`class_id`) REFERENCES `classes` (`class_id`) ON DELETE Restrict ON UPDATE Cascade
 ;
 
 ALTER TABLE `pupils` 

@@ -25,5 +25,5 @@ public interface IScheduleService {
     List<Lesson> GetPupilDaySubject(Pupil pupil, Date date);
     List<Lesson> GetTeacherDaySubject(Pupil pupil, Date date);
 
-    SubjectJournal GetSubjectJournal(Subject subject);
+    void GetSubjectJournal(Subject subject);
 }

@@ -12,11 +12,9 @@ import java.util.List;
  * Created by Артем on 01.05.2016.
  */
 public interface ILessonDao extends IDao<Lesson> {
+
     List<Lesson> GetPupilDayLessons(int pupilID, Date date) throws DAOException;
     List<Lesson> GetTeacherDayLesson(int teacherID, Date date) throws DAOException;
     List<Lesson> GetSubjectLessons(int subjectID) throws DAOException;
     List<Mark> GetLessonMarks(int lessonID) throws DAOException;
-    int InsertLessonMark(int lessonID, Mark mark) throws DAOException;
-    void UpdateLessonMark(Mark mark) throws DAOException;
-    void DeleteLessonMark(Mark mark) throws DAOException;
 }

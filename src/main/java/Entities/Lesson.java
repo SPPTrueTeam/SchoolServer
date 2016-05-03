@@ -9,16 +9,17 @@ import java.util.Date;
 public class Lesson implements IEntity {
     private int ID;
     private Date date;
+    private int room;
     private int scheduleNumber;
     private String homework;
     private int subjectID;
 
     public int getID() {
-        return 0;
+        return ID;
     }
 
     public void setID(int value) {
-
+        ID=value;
     }
 
     public Date getDate() {
@@ -51,5 +52,13 @@ public class Lesson implements IEntity {
 
     public void setSubjectID(int subjectID) {
         this.subjectID = subjectID;
+    }
+
+    public int getRoom() {
+        return room;
+    }
+
+    public void setRoom(int room) {
+        this.room = room;
     }
 }

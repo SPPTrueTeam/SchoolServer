@@ -20,9 +20,6 @@ import java.util.List;
  */
 public class LessonDao implements ILessonDao {
 
-    private final String INSERT_MARK="INSERT INTO `marks` (`mark`, `pupil_id`, `lesson_id`) VALUES (?, ?, ?)";
-    private final String DELETE_MARK = "DELETE FROM `marks` WHERE `mark_id`= ?";
-    private final String UPDATE_MARK = "UPDATE `marks` SET `mark`=?, `pupil_id`=?, `lesson_id`=? WHERE `mark_id`=?";
     private final String SELECT_LESSON_MARKS = "SELECT * FROM `marks` WHERE `lesson_id` = ?";
     private final String SELECT_SUBJECT_LESSONS = "SELECT * FROM `lessons` WHERE `subject_id`=?";
 
@@ -153,69 +150,6 @@ public class LessonDao implements ILessonDao {
         }
     }
 
-    public int InsertLessonMark(int lessonID, Mark mark) throws DAOException {
-        Connection cn = null;
-        try{
-            cn = connection.getConnection();
-            PreparedStatement st = cn.prepareStatement(INSERT_MARK,PreparedStatement.RETURN_GENERATED_KEYS);
-            st.setInt(1, mark.getMark());
-            st.setInt(2, mark.getPupilID());
-            st.setInt(3, lessonID);
-            st.executeUpdate();
-            ResultSet set = st.getGeneratedKeys();
-            if (set.next()){
-                return set.getInt(1);
-            }
-        }
-        catch (SQLException ex) {
-            throw new DAOException(ex);
-        }
-        finally {
-            if (cn!=null)
-                connection.closeConnection();
-        }
-        return -1;
-    }
-
-    public void UpdateLessonMark(Mark mark) throws DAOException {
-        Connection cn = null;
-        try{
-            cn = connection.getConnection();
-            PreparedStatement st = cn.prepareStatement(UPDATE_MARK,PreparedStatement.RETURN_GENERATED_KEYS);
-            st.setInt(1, mark.getMark());
-            st.setInt(2, mark.getPupilID());
-            st.setInt(3, mark.getLessonID());
-            st.setInt(4,mark.getID());
-            st.executeUpdate();
-            ResultSet set = st.getGeneratedKeys();
-        }
-        catch (SQLException ex) {
-            throw new DAOException(ex);
-        }
-        finally {
-            if (cn!=null)
-                connection.closeConnection();
-        }
-    }
-
-    public void DeleteLessonMark(Mark mark) throws DAOException {
-        Connection cn = null;
-        try {
-            cn = connection.getConnection();
-            PreparedStatement st = cn.prepareStatement(DELETE_MARK);
-            st.setInt(1, mark.getID());
-            st.executeQuery();
-        }
-        catch (SQLException ex) {
-            throw new DAOException(ex);
-        }
-        finally {
-            if (cn!=null)
-                connection.closeConnection();
-        }
-
-    }
-
     public int Insert(Lesson item) throws DAOException {
         Connection cn = null;
         try{
@@ -225,7 +159,7 @@ public class LessonDao implements ILessonDao {
             st.setInt(2,item.getScheduleNumber());
             st.setString(3,item.getHomework());
             st.setInt(4,item.getSubjectID());
-            st.executeUpdate();
+            st.executeQuery();
             ResultSet set = st.getGeneratedKeys();
             if (set.next()){
                 return set.getInt(1);

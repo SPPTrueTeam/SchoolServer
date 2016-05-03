@@ -7,6 +7,8 @@ import jdk.nashorn.internal.runtime.regexp.joni.constants.StringType;
  */
 public class Teacher implements IEntity {
     private int ID;
+    private String name;
+    private String surname;
     private int userID;
     private User user;
     private String type;
@@ -41,5 +43,21 @@ public class Teacher implements IEntity {
 
     public void setUserID(int userID) {
         this.userID = userID;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
     }
 }
