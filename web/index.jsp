@@ -7,24 +7,13 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
-<html>
-<script src="angular.js"></script>
+<html ng-app>
   <head>
-    <title>Hello world</title>
+    <script src="angular.js"></script>
+    <link rel="stylesheet" type="text/css" href="pages/SchoolStyle.css">
+    <title>School Server</title>
   </head>
   <body>
-  <h1>Hello World From Struts2</h1>
-  <form action="hello">
-    <label>Please enter your name</label><br/>
-    <input type="text" name="name"/>
-    <input type="submit" value="Say Hello"/>
-  </form>
-  <div ng-app="">
-
-    <p>Input something in the input box:</p>
-    <p>Name: <input type="text" ng-model="name"></p>
-    <p ng-bind="name"></p>
-
-  </div>
+    <div ng-include="'pages/login.html'"></div>
   </body>
 </html>

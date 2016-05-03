@@ -1,13 +1,13 @@
 package DAO;
 
-import Entities.User;
+/*import Entities.User;
 import com.mysql.jdbc.MySQLConnection;
-import com.sun.media.jfxmediaimpl.MediaDisposer;
+import com.sun.media.jfxmediaimpl.MediaDisposer;*/
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.sql.Statement;
+//import java.sql.Statement;
 
 /**
  * Created by Артем on 01.05.2016.

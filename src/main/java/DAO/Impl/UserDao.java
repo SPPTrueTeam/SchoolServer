@@ -7,7 +7,6 @@ import Entities.Pupil;
 import Entities.Role;
 import Entities.Teacher;
 import Entities.User;
-import com.mysql.jdbc.AbandonedConnectionCleanupThread;
 
 import java.sql.*;
 
