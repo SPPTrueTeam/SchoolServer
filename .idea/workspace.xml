@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="ca7f9e0b-422e-4c8d-a939-717644c0e7af" name="Default" comment="Service interfacies added.">
+    <list default="true" id="ca7f9e0b-422e-4c8d-a939-717644c0e7af" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="SchoolServ.iws" />
@@ -361,7 +361,7 @@
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="JavaScript.Libraries" />
+    <property name="settings.editor.selected.configurable" value="vcs.Git" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
   </component>
   <component name="RecentsManager">
@@ -860,11 +860,17 @@
       <option name="project" value="LOCAL" />
       <updated>1462296605040</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="workplace.xml added">
+      <created>1462296806735</created>
+      <option name="number" value="00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1462296806735</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="39589000" />
+    <option name="totallyTimeSpent" value="39635000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -923,7 +929,8 @@
     <MESSAGE value="Maven suport added in project." />
     <MESSAGE value="Src uploaded." />
     <MESSAGE value="Service interfacies added." />
-    <option name="LAST_COMMIT_MESSAGE" value="Service interfacies added." />
+    <MESSAGE value="workplace.xml added" />
+    <option name="LAST_COMMIT_MESSAGE" value="workplace.xml added" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
