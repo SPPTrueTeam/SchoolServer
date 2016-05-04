@@ -9,6 +9,8 @@ import Entities.Teacher;
 import Entities.User;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Артем on 01.05.2016.
@@ -20,6 +22,8 @@ public class UserDao implements IUserDao {
             "VALUES (?, ?, ?, ?)";
     private final static String SELECT_USER_BY_ID = "SELECT * FROM users " +
             "JOIN roles ON users.role_id=roles.role_id WHERE user_id = ?";
+    private final static String SELECT_ALL_USERS = "SELECT * FROM users " +
+            "JOIN roles ON users.role_id=roles.role_id";
     private final static String DELETE_USER="DELETE FROM `users` WHERE `user_id`= ?";
     private final static String UPDATE_USER = "UPDATE `users`" +
             "SET `login`= ?, `password`= ?, `email`= ?, `role_id`= ? WHERE `user_id`= ?";
@@ -52,6 +56,27 @@ public class UserDao implements IUserDao {
                 connection.closeConnection();
         }
         return null;
+    }
+
+    public List<User> GetUserList() throws DAOException {
+        Connection cn = null;
+        try{
+            cn = connection.getConnection();
+            PreparedStatement st = cn.prepareStatement(SELECT_ALL_USERS);
+            ResultSet set = st.executeQuery();
+            ArrayList<User> result = new ArrayList<User>();
+            while (set.next()){
+                result.add(ResultSetToUser(set));
+            }
+            return result;
+        }
+        catch (SQLException ex) {
+            throw new DAOException(ex);
+        }
+        finally {
+            if (cn!=null)
+                connection.closeConnection();
+        }
     }
 
     public Pupil GetPupilByUserId(int id) throws DAOException {

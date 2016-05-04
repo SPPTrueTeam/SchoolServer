@@ -7,7 +7,6 @@ public class Pupil implements IEntity {
     private  int ID;
     private String name;
     private String surname;
-    private User user;
     private int userID;
     private int classID;
 
@@ -17,14 +16,6 @@ public class Pupil implements IEntity {
 
     public void setID(int value) {
         ID = value;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
     }
 
     public int getClassID() {

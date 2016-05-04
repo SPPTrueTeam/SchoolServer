@@ -14,5 +14,6 @@ import java.util.List;
 public interface IPupilDao extends IDao<Pupil> {
     User GetUserByPupilID(int pupilID) throws DAOException;
     Class GetPupilClass(int pupilID) throws DAOException;
+    List<Pupil> GetPupilList() throws DAOException;
     List<Subject> GetPupilSubjects(int pupilID) throws DAOException;
 }

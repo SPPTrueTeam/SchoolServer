@@ -22,6 +22,7 @@ public class PupilDao implements IPupilDao{
 
     private final String INSERT_PUPIL="INSERT INTO `pupils` (`surname`, `name`, `user_id`, `class_id`) VALUES (?, ?, ?, ?)";
     private final String SELECT_PUPIL = "SELECT * FROM pupils WHERE pupil_id=?";
+    private final String SELECT_ALL_PUPILS = "SELECT * FROM pupils";
     private final String DELETE_PUPIL = "DELETE FROM pupils WHERE pupil_id=?";
     private final String UPDATE_PUPIL = "UPDATE NITO pupils SET surname=?, name = ?, user_id=?, class_id=? WHERE pupil_id=?";
     private final String SELECT_USER_BY_PUPIL_ID = "SELECT * FROM users JOIN pupils ON users.user_id=pupils.user_id WHERE pupil_id = ?";
@@ -70,7 +71,7 @@ public class PupilDao implements IPupilDao{
                 Class cl = new Class();
                 cl.setID(set.getInt("class_id"));
                 cl.setGrade(set.getInt("grade"));
-                cl.setLetter(set.getString("letter").charAt(0));
+                cl.setLetter(set.getString("letter"));
                 return cl;
             }
         }
@@ -82,6 +83,33 @@ public class PupilDao implements IPupilDao{
                 connection.closeConnection();
         }
         return null;
+    }
+
+    public List<Pupil> GetPupilList() throws DAOException {
+        Connection cn = null;
+        try{
+            cn = connection.getConnection();
+            PreparedStatement st = cn.prepareStatement(SELECT_ALL_PUPILS);
+            ResultSet set = st.executeQuery();
+            ArrayList<Pupil> result = new ArrayList<Pupil>();
+            while (set.next()){
+                Pupil pupil = new Pupil();
+                pupil.setID(set.getInt("pupil_id"));
+                pupil.setSurname(set.getString("surname"));
+                pupil.setName(set.getString("name"));
+                pupil.setClassID(set.getInt("class_id"));
+                pupil.setUserID(set.getInt("user_id"));
+                result.add(pupil);
+            }
+            return result;
+        }
+        catch (SQLException ex) {
+            throw new DAOException(ex);
+        }
+        finally {
+            if (cn!=null)
+                connection.closeConnection();
+        }
     }
 
     public List<Subject> GetPupilSubjects(int pupilID) throws DAOException {

@@ -8,16 +8,16 @@ public class User implements IEntity {
     private int ID = 0;
     private String login;
     private String password;
-    private String email;
+    private String email = "";
     private Role role;
 
     public int getID() {
         return ID;
     }
+
     public void setID(int value) {
         ID = value;
     }
-
 
     public String getLogin() {
         return login;

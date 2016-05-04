@@ -10,7 +10,7 @@ import java.util.Date;
  */
 public interface IPrintService {
 
-    //Лист статистики ученика(средние балы по предметам.)
+    //Лист статистики ученика(средние баллы по предметам.)
     InputStream PrintPDFAchivementStatistics(Pupil pupil);
     InputStream PrintXLSAchivementStatistics(Pupil pupil);
     InputStream PrintCSVAchivementStatistics(Pupil pupil);
@@ -21,17 +21,17 @@ public interface IPrintService {
     InputStream PrintCSVThanksLetter(Pupil pupil, Teacher teacher);
 
     //Лист журнала с одним предметом
-    InputStream PrintPDFSubjecList(Subject subject);
+    InputStream PrintPDFSubjectList(Subject subject);
     InputStream PrintXLSSubjectList(Subject subject);
     InputStream PrintCSVSubjectList(Subject subject);
 
-    //Расписание дня учителя
-    InputStream PrintPDFTeacheDaySchedule(Teacher teacher, Date date);
-    InputStream PrintXLSTeacherDaySchedule(Teacher teacher, Date date);
-    InputStream PrintCSVTeacherDaySchedule(Teacher teacher, Date date);
+    //Расписание недели учителя
+    InputStream PrintPDFTeacherDaySchedule(Teacher teacher);
+    InputStream PrintXLSTeacherDaySchedule(Teacher teacher);
+    InputStream PrintCSVTeacherDaySchedule(Teacher teacher);
 
-    //Расписание дня ученика
-    InputStream PrintPDFPupilDaySchedule(Pupil pupil, Date date);
-    InputStream PrintXLSPupilDaySchedule(Pupil pupil, Date date);
-    InputStream PrintCSVPupilDaySchedule(Pupil pupil, Date date);
+    //Расписание недели ученика
+    InputStream PrintPDFPupilDaySchedule(Pupil pupil);
+    InputStream PrintXLSPupilDaySchedule(Pupil pupil);
+    InputStream PrintCSVPupilDaySchedule(Pupil pupil);
 }
