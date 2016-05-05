@@ -9,9 +9,16 @@
 
 h3 {
 	font-family: UbuntuB;
+	margin: 5px 0 0;
+	padding: 0;
 }
 p {
 	font-family: UbuntuR;
+}
+h5 {
+	font-family: UbuntuR;
+	margin:0;
+  	padding:0;
 }
 
 .button {
@@ -71,3 +78,39 @@ p {
 	border-radius: 5px;
 	padding: 5px 20px;
 }
+.vertcontainer {
+	display: inline-block;
+	vertical-align: top;
+}
+/*ANIMATIONS*/
+@keyframes slideInUp {
+	from    { transform: translateY(100%); }
+	to      { transform: translateY(0); }
+}
+@keyframes slideInDown {
+	from	{ transform: translateY(-100%);}
+	to		{ transform: translateY(0);}
+}
+@keyframes slideOutUp {
+	to		{transform: translateY(100%); }
+}
+@keyframes slideOutDown {
+	to		{transform: translateY(-100%); }
+}
+.page {
+	bottom:0;
+	padding-top:20px;
+	position:absolute;
+	text-align:center;
+	top:0;
+	width:100%;
+}
+
+.ng-enter       { z-index: 8888; }
+.ng-leave       { z-index: 9999; }
+
+
+.page-login.ng-enter         { animation: slideInDown 1s both ease-in; }
+.page-login.ng-leave         { animation: slideOutDown 1s both ease-in; }
+.page-app.ng-enter			 { animation: slideInUp 1s both ease-in; }
+.page-app.ng-leave			 { animation: slideOutUp 1s both ease-in; }
