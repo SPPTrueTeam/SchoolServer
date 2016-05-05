@@ -18,10 +18,12 @@ import java.util.List;
  * Created by Артем on 03.05.2016.
  */
 public class TeacherDao implements ITeacherDao {
+
     private final String SELECT_SUBJECTS_BY_TEACHER="SELECT * FROM subjects WHERE subjects.teacher_id = ?";
     private final String SELECT_USER_BY_TEACHER_ID = "SELECT * FROM users JOIN teachers ON users.user_id=teachers.user_id WHERE teacher_id = ?";
     private final String INSERT_TEACHER="INSERT INTO `teachers` (`surname`, `name`, `type`, `user_id`) VALUES (?, ?, ?, ?)";
     private final String SELECT_TEACHER="SELECT * FROM teachers WHERE teacher_id=?";
+    private final String SELECT_ALL_TEACHERS = "SELECT * FROM teachers";
     private final String UPDATE_TEACHER="UPDATE INTO teachers SET surname=?, name=?, type=?, user_id=? WHERE teacher_id=?";
     private final String DELETE_TEACHER="DELETE FROM teachers WHERE teacher_id=?";
 
@@ -54,6 +56,33 @@ public class TeacherDao implements ITeacherDao {
                 connection.closeConnection();
         }
         return null;
+    }
+
+    public List<Teacher> GetTeacherList() throws DAOException {
+        Connection cn = null;
+        try{
+            cn = connection.getConnection();
+            PreparedStatement st = cn.prepareStatement(SELECT_ALL_TEACHERS);
+            ResultSet set = st.executeQuery();
+            ArrayList<Teacher> result = new ArrayList<Teacher>();
+            while (set.next()){
+                Teacher teacher = new Teacher();
+                teacher.setSurname(set.getString("surname"));
+                teacher.setName(set.getString("name"));
+                teacher.setUserID(set.getInt("user_id"));
+                teacher.setID(set.getInt("teacher_id"));
+                teacher.setType(set.getString("type"));
+                result.add(teacher);
+            }
+            return result;
+        }
+        catch (SQLException ex) {
+            throw new DAOException(ex);
+        }
+        finally {
+            if (cn!=null)
+                connection.closeConnection();
+        }
     }
 
     public List<Subject> GetTeacherSubjects(int teacherID) throws DAOException {

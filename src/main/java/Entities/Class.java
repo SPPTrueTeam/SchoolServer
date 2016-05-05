@@ -6,7 +6,7 @@ package Entities;
 public class Class implements IEntity {
     private int ID;
     private int grade;
-    private char letter;
+    private String letter;
 
     public int getID() {
         return ID;
@@ -24,11 +24,11 @@ public class Class implements IEntity {
         this.grade = grade;
     }
 
-    public char getLetter() {
+    public String getLetter() {
         return letter;
     }
 
-    public void setLetter(char letter) {
+    public void setLetter(String letter) {
         this.letter = letter;
     }
 

@@ -1,9 +1,6 @@
 package DAO.Impl;
 
-import DAO.Interfacies.ILessonDao;
-import DAO.Interfacies.ISubjectDao;
-import DAO.Interfacies.IUnitOfWork;
-import DAO.Interfacies.IUserDao;
+import DAO.Interfacies.*;
 import DAO.MySqlConnection;
 
 /**
@@ -12,16 +9,28 @@ import DAO.MySqlConnection;
 public class UnitOfWork implements IUnitOfWork {
 
     MySqlConnection connection;
+    IClassDao classDao;
     ILessonDao lessonDao;
+    IMarkDao markDao;
+    IPupilDao pupilDao;
     ISubjectDao subjectDao;
+    ITeacherDao teacherDao;
     IUserDao userDao;
 
     public UnitOfWork(MySqlConnection connection)
     {
         this.connection = connection;
+        classDao = new ClassDao(this.connection);
         lessonDao = new LessonDao(this.connection);
+        markDao = new MarkDao(this.connection);
+        pupilDao = new PupilDao(this.connection);
         subjectDao = new SubjectDao(this.connection);
+        teacherDao = new TeacherDao(this.connection);
         userDao = new UserDao(this.connection);
+    }
+
+    public IClassDao getClassDao() {
+        return classDao;
     }
 
     public ILessonDao getLessonDao()
@@ -29,9 +38,21 @@ public class UnitOfWork implements IUnitOfWork {
         return lessonDao;
     }
 
+    public IMarkDao getMarkDao() {
+        return markDao;
+    }
+
+    public IPupilDao getPupilDao() {
+        return pupilDao;
+    }
+
     public ISubjectDao getSubjectDao()
     {
         return subjectDao;
+    }
+
+    public ITeacherDao getTeacherDao() {
+        return teacherDao;
     }
 
     public IUserDao getUserDao(){

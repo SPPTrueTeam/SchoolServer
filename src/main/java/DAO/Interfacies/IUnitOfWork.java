@@ -7,8 +7,13 @@ import DAO.MySqlConnection;
  */
 public interface IUnitOfWork {
 
+    IClassDao getClassDao();
     ILessonDao getLessonDao();
+    IMarkDao getMarkDao();
+    IPupilDao getPupilDao();
     ISubjectDao getSubjectDao();
+    ITeacherDao getTeacherDao();
     IUserDao getUserDao();
+
     void closeConnection();
 }

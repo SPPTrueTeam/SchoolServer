@@ -12,5 +12,6 @@ import java.util.List;
  */
 public interface ITeacherDao extends IDao<Teacher> {
     User GetUserByTeacherID(int teacherID) throws DAOException;
+    List<Teacher> GetTeacherList() throws DAOException;
     List<Subject> GetTeacherSubjects(int teacherID) throws DAOException;
 }

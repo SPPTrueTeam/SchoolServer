@@ -76,7 +76,7 @@ public class SubjectDao implements ISubjectDao {
                 Class cl = new Class();
                 cl.setID(set.getInt("class_id"));
                 cl.setGrade(set.getInt("grade"));
-                cl.setLetter(set.getString("letter").charAt(0));
+                cl.setLetter(set.getString("letter"));
                 return cl;
             }
         }
@@ -101,6 +101,8 @@ public class SubjectDao implements ISubjectDao {
             while (set.next()){
                 Pupil pupil = new Pupil();
                 pupil.setID(set.getInt("pupil_id"));
+                pupil.setSurname(set.getString("surname"));
+                pupil.setName(set.getString("name"));
                 pupil.setClassID(set.getInt("class_id"));
                 pupil.setUserID(set.getInt("user_id"));
                 result.add(pupil);

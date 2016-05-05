@@ -33,11 +33,14 @@ public class LessonDao implements ILessonDao {
     private final String SELECT_PUPIL_DAY_LESSONS="SELECT * FROM pupils " +
             "JOIN subjects ON subjects.class_id=pupils.class_id " +
             "JOIN lessons ON lessons.subject_id=subjects.subject_id " +
-            "WHERE pupils.pupil_id=? & lessons.date=?";
+            "WHERE pupils.pupil_id=? && lessons.date=?";
     private final String SELECT_TEACHER_DAY_LESSONS="SELECT * FROM teachers " +
             "JOIN subjects ON subjects.teacher_id=teachers.teacher_id " +
             "JOIN lessons ON lessons.subject_id=subjects.subject_id " +
-            "WHERE teachers.teacher_id=? & lessons.date=?";
+            "WHERE teachers.teacher_id=? && lessons.date=?";
+    private final String SELECT_CLASS_DAY_LESSONS = "SELECT * FROM subjects " +
+            "JOIN lessons ON lessons.subject_id=subjects.subject_id " +
+            "WHERE subjects.class_id=? && lessons.date=?";
 
     private MySqlConnection connection;
     public LessonDao(MySqlConnection connection){
@@ -50,6 +53,32 @@ public class LessonDao implements ILessonDao {
             cn = connection.getConnection();
             PreparedStatement st = cn.prepareStatement(SELECT_PUPIL_DAY_LESSONS);
             st.setInt(1, pupilID);
+            st.setDate(2, (java.sql.Date) date);
+            ResultSet set = st.executeQuery();
+            ArrayList<Lesson> result = new ArrayList<Lesson>();
+            while (set.next()) {
+                Lesson lesson = new Lesson();
+                lesson.setID(set.getInt("lesson_id"));
+                lesson.setDate(set.getDate("date"));
+                lesson.setScheduleNumber(set.getInt("schedule_number"));
+                lesson.setSubjectID(set.getInt("subject_id"));
+                result.add(lesson);
+            }
+            return result;
+        } catch (SQLException ex) {
+            throw new DAOException(ex);
+        } finally {
+            if (cn != null)
+                connection.closeConnection();
+        }
+    }
+
+    public List<Lesson> GetClassDayLessons(int classID, Date date) throws DAOException {
+        Connection cn = null;
+        try {
+            cn = connection.getConnection();
+            PreparedStatement st = cn.prepareStatement(SELECT_CLASS_DAY_LESSONS);
+            st.setInt(1, classID);
             st.setDate(2, (java.sql.Date) date);
             ResultSet set = st.executeQuery();
             ArrayList<Lesson> result = new ArrayList<Lesson>();

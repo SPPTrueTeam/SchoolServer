@@ -4,7 +4,7 @@ package Entities;
  * Created by Артем on 01.05.2016.
  */
 public class Mark implements IEntity {
-    private int ID;
+    private int ID=0;
     private int mark;
     private int pupilID;
     private int lessonID;

@@ -10,8 +10,7 @@ public class Teacher implements IEntity {
     private String name;
     private String surname;
     private int userID;
-    private User user;
-    private String type;
+    private String type="";
 
     public int getID() {
         return ID;
@@ -19,14 +18,6 @@ public class Teacher implements IEntity {
 
     public void setID(int value) {
         ID = value;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
     }
 
     public String getType() {

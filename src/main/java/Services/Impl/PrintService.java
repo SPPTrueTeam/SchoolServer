@@ -37,7 +37,7 @@ public class PrintService implements IPrintService {
         return null;
     }
 
-    public InputStream PrintPDFSubjecList(Subject subject) {
+    public InputStream PrintPDFSubjectList(Subject subject) {
         return null;
     }
 
@@ -49,27 +49,28 @@ public class PrintService implements IPrintService {
         return null;
     }
 
-    public InputStream PrintPDFTeacheDaySchedule(Teacher teacher, Date date) {
+    public InputStream PrintPDFTeacherDaySchedule(Teacher teacher) {
         return null;
     }
 
-    public InputStream PrintXLSTeacherDaySchedule(Teacher teacher, Date date) {
+    public InputStream PrintXLSTeacherDaySchedule(Teacher teacher) {
         return null;
     }
 
-    public InputStream PrintCSVTeacherDaySchedule(Teacher teacher, Date date) {
+    public InputStream PrintCSVTeacherDaySchedule(Teacher teacher) {
         return null;
     }
 
-    public InputStream PrintPDFPupilDaySchedule(Pupil pupil, Date date) {
+    public InputStream PrintPDFPupilDaySchedule(Pupil pupil) {
         return null;
     }
 
-    public InputStream PrintXLSPupilDaySchedule(Pupil pupil, Date date) {
+    public InputStream PrintXLSPupilDaySchedule(Pupil pupil) {
         return null;
     }
 
-    public InputStream PrintCSVPupilDaySchedule(Pupil pupil, Date date) {
+    public InputStream PrintCSVPupilDaySchedule(Pupil pupil) {
         return null;
     }
+
 }
