@@ -2,10 +2,8 @@ package Services.Interfacies;
 
 import Entities.*;
 import Entities.Class;
-import ServiceEntities.ScheduleLesson;
 import Services.ServiceException;
 
-import java.time.DayOfWeek;
 import java.util.Date;
 import java.util.List;
 
