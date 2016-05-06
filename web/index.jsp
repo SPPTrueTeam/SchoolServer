@@ -7,13 +7,16 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
-<html ng-app>
+<html ng-app="schoolApp">
   <head>
-    <script src="angular.js"></script>
+    <script src="http://code.angularjs.org/1.3.3/angular.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.3/angular-route.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.3/angular-animate.js"></script>
+    <script src="controller.js"></script>
     <link rel="stylesheet" type="text/css" href="pages/SchoolStyle.css">
     <title>School Server</title>
   </head>
   <body>
-    <div ng-include="'pages/login.html'"></div>
+    <div class="page {{ pageClass }}" ng-view></div>
   </body>
 </html>
