@@ -13,7 +13,6 @@ import ServiceEntities.ScheduleTeacherLesson;
 import ServiceEntities.SubjectJournalList;
 import Services.Interfacies.IPrintService;
 import Services.ServiceException;
-import com.itextpdf.*;
 import com.itextpdf.text.*;
 import com.itextpdf.text.Font;
 import com.itextpdf.text.pdf.PdfPCell;
@@ -25,7 +24,6 @@ import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.xssf.usermodel.*;
 
 import java.io.*;
-import java.security.Provider;
 import java.time.DayOfWeek;
 import java.util.*;
 import java.util.List;

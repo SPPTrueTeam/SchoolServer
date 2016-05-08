@@ -2,6 +2,8 @@ package Services.Interfacies;
 
 import Entities.*;
 import Entities.Class;
+import ServiceEntities.SchedulePupilLesson;
+import ServiceEntities.ScheduleTeacherLesson;
 import Services.ServiceException;
 
 import java.util.Date;
@@ -20,9 +22,9 @@ public interface IScheduleService {
 
     void CreateScheduleForDay(List<Lesson> lessonList, int dayOfWeek) throws ServiceException;
 
-    List<Lesson> GetPupilDayLessons(Pupil pupil, Date date) throws ServiceException;
-    List<Lesson> GetTeacherDayLessons(Teacher teacher, Date date) throws ServiceException;
-    List<Lesson> GetClassDayLessons(Class cls, Date date) throws ServiceException;
+    List<SchedulePupilLesson> GetPupilDayLessons(Pupil pupil, Date date) throws ServiceException;
+    List<ScheduleTeacherLesson> GetTeacherDayLessons(Teacher teacher, Date date) throws ServiceException;
+    List<SchedulePupilLesson> GetClassDayLessons(Class cls, Date date) throws ServiceException;
     List<Lesson> GetNextLessons(Lesson currentLesson, int count) throws ServiceException;
 
 }

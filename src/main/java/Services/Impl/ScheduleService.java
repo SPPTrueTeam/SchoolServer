@@ -4,6 +4,8 @@ import DAO.DAOException;
 import DAO.Interfacies.IUnitOfWork;
 import Entities.*;
 import Entities.Class;
+import ServiceEntities.SchedulePupilLesson;
+import ServiceEntities.ScheduleTeacherLesson;
 import Services.Interfacies.IScheduleService;
 import Services.ServiceException;
 
@@ -88,25 +90,52 @@ public class ScheduleService implements IScheduleService {
         }
     }
 
-    public List<Lesson> GetPupilDayLessons(Pupil pupil, Date date) throws ServiceException {
+    public List<SchedulePupilLesson> GetPupilDayLessons(Pupil pupil, Date date) throws ServiceException {
         try {
-            return uof.getLessonDao().GetPupilDayLessons(pupil.getID(),date);
+            List<Lesson> lessonList = uof.getLessonDao().GetPupilDayLessons(pupil.getID(),date);
+            List<SchedulePupilLesson> resultList = new ArrayList<SchedulePupilLesson>();
+            for(Lesson l : lessonList){
+                SchedulePupilLesson spl = new SchedulePupilLesson();
+                spl.setLesson(l);
+                spl.setSubject(uof.getSubjectDao().Select(l.getSubjectID()));
+                spl.setTeacher(uof.getTeacherDao().Select(spl.getSubject().getTeacherID()));
+                resultList.add(spl);
+            }
+            return resultList;
         } catch (DAOException ex) {
             throw new ServiceException(ex);
         }
     }
 
-    public List<Lesson> GetTeacherDayLessons(Teacher teacher, Date date) throws ServiceException {
+    public List<ScheduleTeacherLesson> GetTeacherDayLessons(Teacher teacher, Date date) throws ServiceException {
         try {
-            return uof.getLessonDao().GetTeacherDayLesson(teacher.getID(),date);
+            List<Lesson> lessonList =  uof.getLessonDao().GetTeacherDayLesson(teacher.getID(),date);
+            List<ScheduleTeacherLesson> resultList = new ArrayList<ScheduleTeacherLesson>();
+            for(Lesson l : lessonList){
+                ScheduleTeacherLesson stl = new ScheduleTeacherLesson();
+                stl.setLesson(l);
+                stl.setSubject(uof.getSubjectDao().Select(l.getSubjectID()));
+                stl.setCls(uof.getClassDao().Select(stl.getSubject().getClassID()));
+                resultList.add(stl);
+            }
+            return resultList;
         } catch (DAOException ex) {
             throw new ServiceException(ex);
         }
     }
 
-    public List<Lesson> GetClassDayLessons(Class cls, Date date) throws ServiceException {
+    public List<SchedulePupilLesson> GetClassDayLessons(Class cls, Date date) throws ServiceException {
         try {
-            return uof.getLessonDao().GetClassDayLessons(cls.getID(),date);
+            List<Lesson> lessonList =  uof.getLessonDao().GetClassDayLessons(cls.getID(),date);
+            List<SchedulePupilLesson> resultList = new ArrayList<SchedulePupilLesson>();
+            for(Lesson l : lessonList){
+                SchedulePupilLesson spl = new SchedulePupilLesson();
+                spl.setLesson(l);
+                spl.setSubject(uof.getSubjectDao().Select(l.getSubjectID()));
+                spl.setTeacher(uof.getTeacherDao().Select(spl.getSubject().getTeacherID()));
+                resultList.add(spl);
+            }
+            return resultList;
         } catch (DAOException ex) {
             throw new ServiceException(ex);
         }
