@@ -163,7 +163,6 @@ public class PrintService implements IPrintService {
         return length;
     }
 
-
     private static final String NEW_LINE_SEPARATOR = "\n";
     public InputStream PrintCSVAchivementStatistics(Pupil pupil)throws ServiceException {
         try{
@@ -313,11 +312,116 @@ public class PrintService implements IPrintService {
     }
 
     public InputStream PrintXLSSubjectList(Subject subject) throws ServiceException {
-        return null;
+        try{
+            SubjectJournalList sjl = GetSubjectJournalInfo(subject);
+            XSSFWorkbook book = new XSSFWorkbook();
+            XSSFSheet sheet = book.createSheet(sjl.getSubject().getName());
+            XSSFRow row  = sheet.createRow(0);
+            sheet.autoSizeColumn(0);
+            XSSFCell cell = row.createCell(0);
+            cell.setCellValue("Pupil/Date");
+            int index=1;
+            for(Lesson l : sjl.getLessonList())
+            {
+                cell = row.createCell(index);
+                cell.setCellValue(l.getDate());
+                sheet.autoSizeColumn(index);
+            }
+
+            int rowIndex=1;
+            for(Pupil p : sjl.getPupilList())
+            {
+                row = sheet.createRow(rowIndex);
+                cell = row.createCell(0);
+                cell.setCellValue(p.getSurname()+" "+p.getName());
+                int columnIndex=1;
+                for (Lesson l : sjl.getLessonList())
+                {
+                    cell = row.createCell(columnIndex);
+                    Mark mark = null;
+                    for (Mark m: sjl.getMarksList().get(rowIndex-1))
+                    {
+                        if (m.getLessonID()==l.getID())
+                            mark = m;
+                    }
+                    if (mark!=null)
+                    {
+                        if (mark.getMark()>0) {
+                            cell.setCellValue(String.valueOf(mark.getMark()));
+                        }
+                        else
+                            cell.setCellValue("a");
+                    }
+                    else
+                        cell.setCellValue("");
+                    columnIndex++;
+                }
+                rowIndex++;
+            }
+
+            book.write(new FileOutputStream("sjl.xlsx"));
+            book.close();
+            return new FileInputStream("sjl.xlsx");
+        }
+        catch(DAOException ex){
+            throw new ServiceException(ex);
+        }
+        catch (IOException ex) {
+            throw new ServiceException(ex);
+        }
     }
 
     public InputStream PrintCSVSubjectList(Subject subject) throws ServiceException {
-        return null;
+        try{
+            CSVFormat csvFileFormat = CSVFormat.DEFAULT.withRecordSeparator(NEW_LINE_SEPARATOR);
+            FileWriter fw = new FileWriter("sjl.csv");
+            CSVPrinter csvFilePrinter = new CSVPrinter(fw,csvFileFormat);
+            SubjectJournalList sjl = GetSubjectJournalInfo(subject);
+            List headerList = new ArrayList();
+            headerList.add("Pupil/Date");
+            for(Lesson l : sjl.getLessonList())
+            {
+                headerList.add(l.getDate());
+            }
+            csvFilePrinter.printRecord(headerList);
+
+            int rowIndex=1;
+            for(Pupil p : sjl.getPupilList())
+            {
+                List printList = new ArrayList();
+                printList.add(p.getSurname()+" "+p.getName());
+                for (Lesson l : sjl.getLessonList())
+                {
+                    Mark mark = null;
+                    for (Mark m: sjl.getMarksList().get(rowIndex-1))
+                    {
+                        if (m.getLessonID()==l.getID())
+                            mark = m;
+                    }
+                    if (mark!=null)
+                    {
+                        if (mark.getMark()>0) {
+                            printList.add(String.valueOf(mark.getMark()));
+                        }
+                        else
+                            printList.add("a");
+                    }
+                    else
+                        printList.add("");;
+                }
+                csvFilePrinter.printRecord(printList);
+                rowIndex++;
+            }
+            fw.flush();
+            fw.close();
+            return new FileInputStream("sjl.csv");
+        }
+        catch (DAOException ex){
+            throw new ServiceException(ex);
+        }
+        catch(IOException ex) {
+            throw new ServiceException(ex);
+        }
     }
 
     private SubjectJournalList GetSubjectJournalInfo(Subject subject)throws DAOException
@@ -400,11 +504,105 @@ public class PrintService implements IPrintService {
     }
 
     public InputStream PrintXLSTeacherWeekSchedule(Teacher teacher) throws ServiceException {
-        return null;
+        try{
+            List<List<ScheduleTeacherLesson>> weekScheduleList = GetTeacherWeekSchedule(teacher);
+            XSSFWorkbook book = new XSSFWorkbook();
+            XSSFSheet sheet = book.createSheet(teacher.getSurname()+" "+teacher.getName()+" schedule");
+
+            int dayIndex=1;
+            int rowIndex=0;
+            for(int i=0;i<4;i++) {
+                sheet.autoSizeColumn(i);
+            }
+            for(List<ScheduleTeacherLesson> spl:weekScheduleList)
+            {
+                DayOfWeek dof = DayOfWeek.of(dayIndex);
+                XSSFRow row = sheet.createRow(rowIndex);
+                XSSFCell cell = row.createCell(0);
+                cell.setCellValue(dof.toString());
+                rowIndex++;
+                row = sheet.createRow(rowIndex);
+                cell = row.createCell(0);
+                cell.setCellValue("N");
+                cell = row.createCell(1);
+                cell.setCellValue("Subject");
+                cell = row.createCell(2);
+                cell.setCellValue("Class");
+                cell = row.createCell(3);
+                cell.setCellValue("Room");
+                rowIndex++;
+                for(ScheduleTeacherLesson pl: spl)
+                {
+                    row = sheet.createRow(rowIndex);
+                    cell = row.createCell(0);
+                    cell.setCellValue(pl.getLesson().getScheduleNumber());
+                    cell = row.createCell(1);
+                    cell.setCellValue(pl.getSubject().getName());
+                    cell = row.createCell(2);
+                    cell.setCellValue(pl.getCls().getName());
+                    cell = row.createCell(3);
+                    cell.setCellValue(pl.getLesson().getRoom());
+                    rowIndex++;
+                }
+                dayIndex++;
+                rowIndex++;
+            }
+
+            book.write(new FileOutputStream("tws.xlsx"));
+            book.close();
+            return new FileInputStream("tws.xlsx");
+        }
+        catch(DAOException ex){
+            throw new ServiceException(ex);
+        }
+        catch (IOException ex) {
+            throw new ServiceException(ex);
+        }
     }
 
     public InputStream PrintCSVTeacherWeekSchedule(Teacher teacher) throws ServiceException {
-        return null;
+        try{
+            List<List<ScheduleTeacherLesson>> weekScheduleList = GetTeacherWeekSchedule(teacher);
+            CSVFormat csvFileFormat = CSVFormat.DEFAULT.withRecordSeparator(NEW_LINE_SEPARATOR);
+            FileWriter fw = new FileWriter("tws.csv");
+            CSVPrinter csvFilePrinter = new CSVPrinter(fw,csvFileFormat);
+
+            int dayIndex=1;
+            for(List<ScheduleTeacherLesson> spl:weekScheduleList)
+            {
+                DayOfWeek dof = DayOfWeek.of(dayIndex);
+                List printList = new ArrayList();
+                printList.add(dof.toString());
+                csvFilePrinter.printRecord(printList);
+                printList = new ArrayList();
+                printList.add("N");
+                printList.add("Subject");
+                printList.add("Class");
+                printList.add("Room");
+                csvFilePrinter.printRecord(printList);
+                for(ScheduleTeacherLesson pl: spl)
+                {
+                    printList = new ArrayList();
+                    printList.add(pl.getLesson().getScheduleNumber());
+                    printList.add(pl.getSubject().getName());
+                    printList.add(pl.getCls().getName());
+                    printList.add(pl.getLesson().getRoom());
+                    csvFilePrinter.printRecord(printList);
+                }
+                dayIndex++;
+                printList.add(new ArrayList());
+            }
+
+            fw.flush();
+            fw.close();
+            return new FileInputStream("tws.csv");
+        }
+        catch(DAOException ex){
+            throw new ServiceException(ex);
+        }
+        catch (IOException ex) {
+            throw new ServiceException(ex);
+        }
     }
 
     private List<List<ScheduleTeacherLesson>> GetTeacherWeekSchedule(Teacher teacher) throws DAOException
@@ -488,12 +686,106 @@ public class PrintService implements IPrintService {
         }
     }
 
-    public InputStream PrintXLSPupilWeekSchedule(Pupil pupil) throws ServiceException {
-        return null;
+    public InputStream PrintCSVPupilWeekSchedule(Pupil pupil) throws ServiceException {
+        try{
+            List<List<SchedulePupilLesson>> weekScheduleList = GetPupilWeekSchedule(pupil);
+            CSVFormat csvFileFormat = CSVFormat.DEFAULT.withRecordSeparator(NEW_LINE_SEPARATOR);
+            FileWriter fw = new FileWriter("pws.csv");
+            CSVPrinter csvFilePrinter = new CSVPrinter(fw,csvFileFormat);
+
+            int dayIndex=1;
+            for(List<SchedulePupilLesson> spl:weekScheduleList)
+            {
+                DayOfWeek dof = DayOfWeek.of(dayIndex);
+                List printList = new ArrayList();
+                printList.add(dof.toString());
+                csvFilePrinter.printRecord(printList);
+                printList = new ArrayList();
+                printList.add("N");
+                printList.add("Subject");
+                printList.add("Teacher");
+                printList.add("Room");
+                csvFilePrinter.printRecord(printList);
+                for(SchedulePupilLesson pl: spl)
+                {
+                    printList = new ArrayList();
+                    printList.add(pl.getLesson().getScheduleNumber());
+                    printList.add(pl.getSubject().getName());
+                    printList.add(pl.getTeacher().getSurname()+" "+ pl.getTeacher().getName());
+                    printList.add(pl.getLesson().getRoom());
+                    csvFilePrinter.printRecord(printList);
+                }
+                dayIndex++;
+                printList.add(new ArrayList());
+            }
+
+            fw.flush();
+            fw.close();
+            return new FileInputStream("pws.csv");
+        }
+        catch(DAOException ex){
+            throw new ServiceException(ex);
+        }
+        catch (IOException ex) {
+            throw new ServiceException(ex);
+        }
     }
 
-    public InputStream PrintCSVPupilWeekSchedule(Pupil pupil) throws ServiceException {
-        return null;
+    public InputStream PrintXLSPupilWeekSchedule(Pupil pupil) throws ServiceException {
+        try{
+            List<List<SchedulePupilLesson>> weekScheduleList = GetPupilWeekSchedule(pupil);
+            XSSFWorkbook book = new XSSFWorkbook();
+            XSSFSheet sheet = book.createSheet(pupil.getSurname()+" "+pupil.getName()+" schedule");
+
+            int dayIndex=1;
+            int rowIndex=0;
+            for(int i=0;i<4;i++) {
+                sheet.autoSizeColumn(i);
+            }
+            for(List<SchedulePupilLesson> spl:weekScheduleList)
+            {
+                DayOfWeek dof = DayOfWeek.of(dayIndex);
+                XSSFRow row = sheet.createRow(rowIndex);
+                XSSFCell cell = row.createCell(0);
+                cell.setCellValue(dof.toString());
+                rowIndex++;
+                row = sheet.createRow(rowIndex);
+                cell = row.createCell(0);
+                cell.setCellValue("N");
+                cell = row.createCell(1);
+                cell.setCellValue("Subject");
+                cell = row.createCell(2);
+                cell.setCellValue("Teacher");
+                cell = row.createCell(3);
+                cell.setCellValue("Room");
+                rowIndex++;
+                for(SchedulePupilLesson pl: spl)
+                {
+                    row = sheet.createRow(rowIndex);
+                    cell = row.createCell(0);
+                    cell.setCellValue(pl.getLesson().getScheduleNumber());
+                    cell = row.createCell(1);
+                    cell.setCellValue(pl.getSubject().getName());
+                    cell = row.createCell(2);
+                    cell.setCellValue(pl.getTeacher().getSurname()+" "+ pl.getTeacher().getName());
+                    cell = row.createCell(3);
+                    cell.setCellValue(pl.getLesson().getRoom());
+                    rowIndex++;
+                }
+                dayIndex++;
+                rowIndex++;
+            }
+
+            book.write(new FileOutputStream("pws.xlsx"));
+            book.close();
+            return new FileInputStream("pws.xlsx");
+        }
+        catch(DAOException ex){
+            throw new ServiceException(ex);
+        }
+        catch (IOException ex) {
+            throw new ServiceException(ex);
+        }
     }
 
     private List<List<SchedulePupilLesson>> GetPupilWeekSchedule(Pupil pupil) throws DAOException
